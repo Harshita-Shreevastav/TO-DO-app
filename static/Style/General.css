@@ -1,0 +1,10 @@
+body {
+    font-family: Roboto;
+    padding:20px;
+}
+
+.outer-box {
+    width:98%;
+    height: 95%;
+    border: 1px solid black;
+}

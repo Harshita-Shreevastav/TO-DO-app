@@ -1,0 +1,76 @@
+{% extends "base.html"%}
+{% block head %} 
+<title>
+    Your TO-DO List
+</title>
+{% endblock %}
+
+{% block body %} 
+
+<form action="/" method="POST">
+ <div style="padding:10px; display: flex; flex-direction: column; align-items: center; justify-content: left; width: 100%;">
+    <div style="display: flex; width: 100%; column-gap: 5px; justify-content: center; align-items: center; width: 50%;">
+        <div style="flex-grow: 1;">
+            <input class="text-box" type="text" name="task" placeholder=" Type to add new task">
+        </div>
+        <div>
+            <input class="submit" type="submit" class="add" value="ADD">
+        </div>
+    </div>
+
+    <div   style="width: 70%; justify-content: center; " >
+        <table class="task-table" border="1" cellpadding="10px" cellspacing="0" >
+            <thead>
+                <tr>
+                    
+                    <th style="width: 15%;">
+                        Date-Time
+                    </th>
+        
+                    <th style="width:40%">
+                        Tasks
+                    </th>
+                    
+                    <th style="width:5%">
+        
+                        Alterations
+                    </th>
+
+                </tr>
+
+
+                
+                
+            </thead>
+
+            <tbody style="padding: 5px;">
+                {% if data %}
+                    {% for record in data %} 
+                        <tr >
+                            
+
+                            <td style=" padding: 1px; text-align:center; height: 15px; line-height: 20px ; overflow: hidden;">
+                                {{record.dat.strftime('%Y-%m-%d %H:%M:%S')}}
+                            </td>
+
+                            <td style="padding: 1px;text-align:center; height: 20px;line-height: 20px; overflow: hidden;">
+                                <p>{{record.task}}</p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                {% else %}
+                <tr>
+                    <td colspan="3">No tasks available. Please add a task.</td>
+                </tr>
+                {% endif %}
+                
+            </tbody>
+            
+
+        </table>
+    </div>
+ </div>
+</form>
+
+{% endblock %}
