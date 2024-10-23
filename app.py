@@ -35,9 +35,16 @@ class Data(db.Model):
 @app.route("/", methods=['GET', 'POST'])
 def home():
     if request.method=="POST":
+
         print("Task entered")
         task=request.form.get("task")
-        print(task)
+        if task:
+            
+            print(task)
+
+        else:
+            flash("Task not entered!", "error")
+            return redirect(url_for("home"))
         time=datetime.now()
         print(time)
         
@@ -49,6 +56,7 @@ def home():
         db.session.add(record)
         db.session.commit()
         print("record added")
+        flash("Task added!", "info")
         print(record)
         print(record.dat)
         print(record.task)

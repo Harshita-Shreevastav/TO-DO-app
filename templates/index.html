@@ -18,7 +18,16 @@
         </div>
     </div>
 
-    <div   style="width: 70%; justify-content: center; " >
+    <div>
+        {% with messages=get_flashed_messages()%}
+            {% for message in messages %} 
+                <p> {{message}}</p>
+            
+            {% endfor%}
+        {% endwith %}
+    </div>
+
+    <div   style="width: 70%; justify-content: center; padding:20px " >
         <table class="task-table" border="1" cellpadding="10px" cellspacing="0" >
             <thead>
                 <tr>
