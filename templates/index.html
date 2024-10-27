@@ -11,10 +11,13 @@
  <div style="padding:10px; display: flex; flex-direction: column; align-items: center; justify-content: left; width: 100%;">
     <div style="display: flex; width: 100%; column-gap: 5px; justify-content: center; align-items: center; width: 50%;">
         <div style="flex-grow: 1;">
-            <input class="text-box" type="text" name="task" placeholder=" Type to add new task">
+            {{form.hidden_tag()}}
+            {{form.task(class="text-box", placeholder=" Type to add new task")}}
+            
         </div>
         <div>
-            <input class="submit" type="submit" class="add" value="ADD">
+            {{form.submit(class="submit")}}
+            
         </div>
     </div>
 
@@ -53,18 +56,24 @@
             </thead>
 
             <tbody style="padding: 5px;">
-                {% if data %}
-                    {% for record in data %} 
+                {% if data_record %}
+                    {% for record in data_record %} 
                         <tr >
                             
 
-                            <td style=" padding: 1px; text-align:center; height: 15px; line-height: 20px ; overflow: hidden;">
-                                {{record.dat.strftime('%Y-%m-%d %H:%M:%S')}}
+                            <td style=" padding: 1px; text-align:center; height: 15px; line-height: 10px ; overflow: hidden;">
+                                {{record.dat}}
                             </td>
 
-                            <td style="padding: 1px;text-align:center; height: 20px;line-height: 20px; overflow: hidden;">
+                            <td style="padding: 1px;text-align:center; height: 15px;line-height: 10px; overflow: hidden;">
                                 <p>{{record.task}}</p>
                             </td>
+                       
+
+                            <td style="padding: 1px;text-align:center; height: 15px;line-height: 10px; overflow: hidden;">
+                                <a class="update" href="{{url_for('update', s_no=record._s_no)}}"> Update</a>
+                            </td>
+
                         </tr>
                     {% endfor %}
 

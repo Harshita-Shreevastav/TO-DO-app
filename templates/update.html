@@ -1,0 +1,35 @@
+{% extends  "base.html" %}
+
+{% block head %}
+ <title>
+    Update Task
+ </title> 
+{%endblock%}
+
+{%block body%}
+ <form action="{{url_for('update', s_no=s_no)}}" method="POST">
+        <div style="display:flex; justify-content: center; align-items: center; 
+        width:60%; padding: 20px 200px; margin:50px;">
+
+            
+
+            <div style="flex-grow: 1; width: 90%;">
+                {{form.hidden_tag()}}
+
+                {{form.updated_task(class="text-box")}}
+            </div>
+                
+
+            <div style="width:70px">
+                {{form.submit(class="submit")}}
+            </div>
+                
+
+                
+            
+
+        </div>
+ </form>
+ 
+{%endblock%}
+
