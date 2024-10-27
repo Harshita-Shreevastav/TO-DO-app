@@ -6,7 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators,SubmitField
 from wtforms.validators import DataRequired
 
-
+# App initialisation
 app=Flask(__name__)
 app.config['SECRET_KEY']="todo"
 
@@ -29,7 +29,10 @@ class Data(db.Model):
         
        
         self.task=task
-       
+
+
+# WTForm to enter new task
+     
 class Taskform(FlaskForm):
     task=StringField("The task", validators=[DataRequired()])
     submit=SubmitField("ADD")
@@ -40,6 +43,11 @@ class updateform(FlaskForm):
     submit= SubmitField("UPDATE")
 
 
+#Home Page that shows all previously added tasks, a textbox to enter new task, 
+#a ADD button to add it to table/database,
+##an update link which directs to the update page where you can enter the upadtes task 
+#and hit update to reflect it in table/databse
+
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -48,13 +56,18 @@ def home():
     task=None
     form=Taskform()
 
+    #Verifies if anu data is entered in the textbox by the user.
+
+    """If a task is entered, the task entered is stored in a variabel called task 
+    and then the form-textbox is again set to none for new task entry"""
+
     if form.validate_on_submit():
         task= form.task.data
         form.task.data=None
         
 
 
-
+        #Here the task is being added to database/table
         if task:
             
             print(task)
@@ -73,7 +86,9 @@ def home():
             
            
 
-            return redirect(url_for("home"))
+            return redirect(url_for("home")) #redirects to home page via get request  to reflect change and 
+                                             # cancelled out duplication of data which might occurs during 
+                                             # refresh due to the previous request methods beingpost.
 
     else:
 
@@ -82,10 +97,13 @@ def home():
         data_records = Data.query.all()
         print(data_records)
 
+        
+
         return render_template("index.html", data_record=data_records, form=form,task=task)
 
 
 
+# update page with a textbox box with pre-texted task to overwrite and an upadte button to reflect change
 
 @app.route("/update/<s_no>", methods=['GET','POST'])
 def update(s_no):
@@ -93,7 +111,7 @@ def update(s_no):
     update_form=updateform()
 
     
-    record_to_update=Data.query.get_or_404(s_no)
+    record_to_update=Data.query.get_or_404(s_no)# Checks for record with s_no as id else returns 404
     print("Record found!")
 
     if update_form.validate_on_submit():
@@ -109,8 +127,21 @@ def update(s_no):
     else:
 
         print("Into else")
-        return render_template("update.html", s_no=s_no, form=update_form, updated_task=updated_task)
+        return render_template("update.html", record_to_update=record_to_update, form=update_form, 
+                               updated_task=updated_task)
+
+@app.route("/delete/<s_no>", methods=['GET','POST']) 
+def delete(s_no):
+
+    record_to_delete=Data.query.get_or_404(s_no)
+    print("Record found!")
+    db.session.delete(record_to_delete)
+    db.session.commit()
+
+    return redirect(url_for("home"))
+
     
+
 
 if __name__=="__main__":
     with app.app_context():

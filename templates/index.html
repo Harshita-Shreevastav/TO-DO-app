@@ -55,23 +55,24 @@
                 
             </thead>
 
-            <tbody style="padding: 5px;">
+            <tbody >
                 {% if data_record %}
                     {% for record in data_record %} 
                         <tr >
                             
 
-                            <td style=" padding: 1px; text-align:center; height: 15px; line-height: 10px ; overflow: hidden;">
+                            <td style=" padding: 0; text-align:center ; overflow: hidden;">
                                 {{record.dat}}
                             </td>
 
-                            <td style="padding: 1px;text-align:center; height: 15px;line-height: 10px; overflow: hidden;">
+                            <td style="padding: 1px;text-align:center; height: 5px; overflow: hidden;">
                                 <p>{{record.task}}</p>
                             </td>
                        
 
-                            <td style="padding: 1px;text-align:center; height: 15px;line-height: 10px; overflow: hidden;">
-                                <a class="update" href="{{url_for('update', s_no=record._s_no)}}"> Update</a>
+                            <td style="padding: 1px;text-align:center; overflow: hidden;">
+                                <a class="update" style="display: block; padding: 0 0 4px 0;" href="{{url_for('update', s_no=record._s_no)}}"> Update</a>
+                                <a class="delete" href="{{url_for('delete', s_no=record._s_no)}}"> Delete</a>
                             </td>
 
                         </tr>

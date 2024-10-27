@@ -7,7 +7,7 @@
 {%endblock%}
 
 {%block body%}
- <form action="{{url_for('update', s_no=s_no)}}" method="POST">
+ <form action="{{url_for('update', s_no=record_to_update._s_no)}}" method="POST">
         <div style="display:flex; justify-content: center; align-items: center; 
         width:60%; padding: 20px 200px; margin:50px;">
 
@@ -16,7 +16,7 @@
             <div style="flex-grow: 1; width: 90%;">
                 {{form.hidden_tag()}}
 
-                {{form.updated_task(class="text-box")}}
+                {{form.updated_task(class="text-box", value=record_to_update.task)}}
             </div>
                 
 
