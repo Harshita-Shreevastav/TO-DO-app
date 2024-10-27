@@ -6,6 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators,SubmitField
 from wtforms.validators import DataRequired
 import pytz
+from flask_migrate import Migrate
 
 # App initialisation
 app=Flask(__name__)
@@ -18,9 +19,11 @@ app.permanent_session_lifetime=timedelta(minutes=5)
 # Initialize the database
 db = SQLAlchemy(app)
 
+migrate=Migrate(app,db)
+
 class Data(db.Model):
     
-    _s_no=db.Column("s_no", db.Integer , primary_key=True, autoincrement=True)
+    _id=db.Column("id", db.Integer , primary_key=True, autoincrement=True)
     dat=db.Column(db.DateTime, nullable=False)
     task=db.Column(db.String(200), nullable=False)
     
@@ -107,13 +110,13 @@ def home():
 
 # update page with a textbox box with pre-texted task to overwrite and an upadte button to reflect change
 
-@app.route("/update/<s_no>", methods=['GET','POST'])
-def update(s_no):
+@app.route("/update/<id>", methods=['GET','POST'])
+def update(id):
     updated_task=None
     update_form=updateform()
 
     
-    record_to_update=Data.query.get_or_404(s_no)# Checks for record with s_no as id else returns 404
+    record_to_update=Data.query.get_or_404(id)# Checks for record with id as id else returns 404
     print("Record found!")
 
     if update_form.validate_on_submit():
@@ -132,10 +135,10 @@ def update(s_no):
         return render_template("update.html", record_to_update=record_to_update, form=update_form, 
                                updated_task=updated_task)
 
-@app.route("/delete/<s_no>", methods=['GET','POST']) 
-def delete(s_no):
+@app.route("/delete/<id>", methods=['GET','POST']) 
+def delete(id):
 
-    record_to_delete=Data.query.get_or_404(s_no)
+    record_to_delete=Data.query.get_or_404(id)
     print("Record found!")
     db.session.delete(record_to_delete)
     db.session.commit()
