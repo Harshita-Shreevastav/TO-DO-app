@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators,SubmitField
 from wtforms.validators import DataRequired
+import pytz
 
 # App initialisation
 app=Flask(__name__)
@@ -20,15 +21,16 @@ db = SQLAlchemy(app)
 class Data(db.Model):
     
     _s_no=db.Column("s_no", db.Integer , primary_key=True, autoincrement=True)
-    dat=db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    dat=db.Column(db.DateTime, nullable=False)
     task=db.Column(db.String(200), nullable=False)
     
 
 
-    def __init__(self, task):
+    def __init__(self, task,dat):
         
        
         self.task=task
+        self.dat=dat
 
 
 # WTForm to enter new task
@@ -71,7 +73,7 @@ def home():
         if task:
             
             print(task)
-            record=Data(task=task)
+            record=Data(task=task, dat=datetime.now())
             print(record)
             
             db.session.add(record)

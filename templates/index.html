@@ -30,7 +30,7 @@
         {% endwith %}
     </div>
 
-    <div   style="width: 70%; justify-content: center; padding:20px " >
+    <div   style="width: 70%; justify-content: center; padding:20px; background-color: blanchedalmond; margin:20px 0" >
         <table class="task-table" border="1" cellpadding="10px" cellspacing="0" >
             <thead>
                 <tr>
@@ -62,7 +62,9 @@
                             
 
                             <td style=" padding: 0; text-align:center ; overflow: hidden;">
-                                {{record.dat}}
+                                
+                                {{record.dat.strftime("%Y-%m-%d    ")}}
+                                {{record.dat.strftime("%I:%M %p")}}
                             </td>
 
                             <td style="padding: 1px;text-align:center; height: 5px; overflow: hidden;">
